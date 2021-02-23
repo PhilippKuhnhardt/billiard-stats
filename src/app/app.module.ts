@@ -10,6 +10,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     MatSidenavModule,
     MatListModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

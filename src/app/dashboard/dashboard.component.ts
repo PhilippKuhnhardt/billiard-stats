@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Player} from '../models/player.model';
 import {PlayerService} from '../services/player.service';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,9 +20,13 @@ export class DashboardComponent implements OnInit {
 
   constructor(private playerService: PlayerService) { }
 
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   ngOnInit(): void {
     this.playerService.getAllPlayers().subscribe((playerList: Player[]) => {
       this.dataSource.data = playerList;
+      this.dataSource.sort = this.sort;
+
     });
   }
 

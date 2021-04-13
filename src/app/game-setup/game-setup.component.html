@@ -1,0 +1,27 @@
+<form [formGroup]="gameSetupForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Spieler Team 1</mat-label>
+    <mat-select multiple formControlName="teamOne">
+      <mat-option *ngFor="let player of players" [value]="player.id">{{player.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Spieler Team 2</mat-label>
+    <mat-select multiple formControlName="teamTwo">
+      <mat-option *ngFor="let player of players" [value]="player.id">{{player.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Spiellänge</mat-label>
+    <mat-select formControlName="gameLength">
+      <mat-option value="{{this.GAME_LENGTH.BO1}}">BO1</mat-option>
+      <mat-option value="{{this.GAME_LENGTH.BO3}}">BO3</mat-option>
+      <mat-option value="{{this.GAME_LENGTH.BO5}}">BO5</mat-option>
+      <mat-option value="{{this.GAME_LENGTH.BO7}}">BO7</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <button mat-raised-button color="primary" [disabled]="!gameSetupForm.valid">Start</button>
+</form>

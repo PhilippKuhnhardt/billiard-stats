@@ -26,7 +26,6 @@ export class DashboardComponent implements OnInit {
     this.playerService.getAllPlayers().subscribe((playerList: Player[]) => {
       this.dataSource.data = playerList;
       this.dataSource.sort = this.sort;
-
     });
   }
 

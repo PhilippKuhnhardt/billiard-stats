@@ -22,13 +22,4 @@ describe('PlayerService', () => {
       done();
     });
   });
-
-  it('getPlayer() should return a certain Player', done => {
-    service.getPlayer('Kuni').subscribe((player: Player) => {
-      expect(player).toBeInstanceOf(Player);
-      expect(player.playerName).toBe('Kuni');
-      expect(player.elo).toBe(500);
-      done();
-    });
-  });
 });

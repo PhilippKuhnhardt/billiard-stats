@@ -11,17 +11,19 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import {MatButtonModule} from '@angular/material/button';
-import { GameSetupComponent } from './game-setup/game-setup.component';
+import { MatchSetupComponent } from './match/match-setup/match-setup.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
+import { MatchControllerComponent } from './match/match-controller.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     SidenavComponent,
-    GameSetupComponent
+    MatchSetupComponent,
+    MatchControllerComponent
   ],
   imports: [
     BrowserModule,

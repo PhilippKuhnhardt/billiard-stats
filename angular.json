@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "billiardStats"
+  "defaultProject": "billiardStats",
+  "cli": {
+    "analytics": "82245e0b-aea8-4bc8-9248-7ca6e56b79a5"
+  }
 }

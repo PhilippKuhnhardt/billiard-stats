@@ -21,4 +21,8 @@ export class Team {
     }
     return true;
   }
+
+  public readableString(): string {
+    return this.playerList.toString()
+  }
 }

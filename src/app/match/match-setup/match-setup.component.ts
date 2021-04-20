@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Player} from '../models/player.model';
-import {PlayerService} from '../services/player.service';
-import {noDuplicatePlayerValidator} from '../validators/no-duplicate-player.directive';
+import {Player} from '../../models/player.model';
+import {PlayerService} from '../../services/player.service';
+import {noDuplicatePlayerValidator} from '../../validators/no-duplicate-player.directive';
 
 @Component({
-  selector: 'app-game-setup',
-  templateUrl: './game-setup.component.html',
-  styleUrls: ['./game-setup.component.css']
+  selector: 'app-match-setup',
+  templateUrl: './match-setup.component.html',
+  styleUrls: ['./match-setup.component.css']
 })
-export class GameSetupComponent implements OnInit {
+export class MatchSetupComponent implements OnInit {
 
   public GAME_LENGTH = {
     BO1: 0,

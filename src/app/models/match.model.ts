@@ -1,5 +1,4 @@
 import {Team} from './team.model';
-import {Game} from './game.model';
 
 export class Match {
   /**
@@ -21,24 +20,25 @@ export class Match {
     BO7: 3,
   };
 
-  public teamOne: Team;
-  public teamTwo: Team;
-  public winsTeamOne = 0;
-  public winsTeamTwo = 0;
+  public static TEAM = {
+    ONE: 0,
+    TWO: 1
+  };
+
+
+  public teams: Team[];
+  public winsForTeam = [0, 0];
   public currentState: number;
   public winner: Team;
   public gameLength: number;
-  public games: Game[];
 
   private winsNeeded = 0;
 
   constructor(teamOne: Team, teamTwo: Team, gameLength: number) {
-    this.teamOne = teamOne;
-    this.teamTwo = teamTwo;
+    this.teams = [teamOne, teamOne];
     this.gameLength = gameLength;
 
     this.currentState = Match.STATE.ONGOING;
-    this.games = [];
 
     switch(this.gameLength){
       case Match.GAME_LENGTH.BO7: this.winsNeeded++;
@@ -51,43 +51,82 @@ export class Match {
   public finishGame(winningTeam: Team){
     /**
      * Checks is state allows for another game to be finished
-     * Adds the game win to the Game List and the Wincount
+     * Adds game to Wincount
      * Then it updates the state and all appropriate vars
      */
     if (this.currentState === Match.STATE.FINISHED) { return; }
     this.addGameWin(winningTeam);
+    this.afterGame();
+  }
 
+  public switchGameResult(newWinningTeam: Team) {
+    /**
+     * Checks if adding and subtracting the game is legal
+     * Then Deletes game from one wincount and adds it to another
+     * Then it updates the state and all appropriate vars
+     */
+    if (!this.isSwitchingGameResultLegal(newWinningTeam)){ return; }
+    this.addGameWin(newWinningTeam);
+    this.deleteGameWin(this.getOppositeTeam(newWinningTeam));
+    if(this.currentState === Match.STATE.FINISHED && !this.checkIfGameHasFinished()){ this.restartMatch(); }
+    this.afterGame();
+
+  }
+
+  private afterGame(){
     if(this.checkIfGameHasFinished()){
       this.finishUpMatch();
     }
+  }
 
+
+  private isSwitchingGameResultLegal(newWinningTeam: Team): boolean{
+    if (newWinningTeam.equals(this.teams[Match.TEAM.ONE])){
+      if (this.winsForTeam[Match.TEAM.ONE] === this.winsNeeded || this.winsForTeam[Match.TEAM.TWO] === 0) { return false; }
+    } else {
+      if (this.winsForTeam[Match.TEAM.ONE] === 0 || this.winsForTeam[Match.TEAM.TWO] === this.winsNeeded) { return false; }
+    }
+    return true;
   }
 
   private getOppositeTeam(team: Team): Team{
-    if (team.equals(this.teamOne)) { return this.teamTwo; }
-    return this.teamOne;
+    if (team.equals(this.teams[Match.TEAM.ONE])) { return this.teams[Match.TEAM.TWO]; }
+    return this.teams[Match.TEAM.ONE];
   }
 
   private addGameWin(winningTeam: Team){
-    this.games.push(new Game(winningTeam, this.getOppositeTeam(winningTeam)));
-    if (winningTeam.equals(this.teamOne)){
-      this.winsTeamOne++;
+    if (winningTeam.equals(this.teams[Match.TEAM.ONE])){
+      this.winsForTeam[Match.TEAM.ONE]++;
     } else {
-      this.winsTeamTwo++;
+      this.winsForTeam[Match.TEAM.TWO]++;
+    }
+  }
+
+  private deleteGameWin(winningTeam: Team){
+    if (winningTeam.equals(this.teams[Match.TEAM.ONE])){
+      this.winsForTeam[Match.TEAM.ONE]--;
+    } else {
+      this.winsForTeam[Match.TEAM.TWO]--;
     }
   }
 
   private checkIfGameHasFinished(): boolean {
-    if(this.winsTeamOne === this.winsNeeded) { return true; }
-    if(this.winsTeamTwo === this.winsNeeded) { return true; }
+    if(this.winsForTeam[Match.TEAM.ONE] === this.winsNeeded) { return true; }
+    if(this.winsForTeam[Match.TEAM.TWO] === this.winsNeeded) { return true; }
     return false;
   }
 
   private finishUpMatch(){
     this.currentState = Match.STATE.FINISHED;
 
-    if(this.winsTeamOne === this.winsNeeded) { this.winner = this.teamOne; }
-    else { this.winner = this.teamTwo; }
+    if(this.winsForTeam[Match.TEAM.ONE] === this.winsNeeded) { this.winner = this.teams[Match.TEAM.ONE]; }
+    else { this.winner = this.teams[Match.TEAM.TWO]; }
   }
+
+  private restartMatch(){
+    this.currentState = Match.STATE.ONGOING;
+    this.winner = null;
+  }
+
 
 }

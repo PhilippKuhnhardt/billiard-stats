@@ -14,10 +14,10 @@ export class Match {
   };
 
   public static GAME_LENGTH = {
-    BO1: 0,
-    BO3: 1,
-    BO5: 2,
-    BO7: 3,
+    BO1: 1,
+    BO3: 3,
+    BO5: 5,
+    BO7: 7,
   };
 
   public static TEAM = {
@@ -35,8 +35,8 @@ export class Match {
   private winsNeeded = 0;
 
   constructor(teamOne: Team, teamTwo: Team, gameLength: number) {
-    this.teams = [teamOne, teamOne];
-    this.gameLength = gameLength;
+    this.teams = [teamOne, teamTwo];
+    this.gameLength = Number(gameLength);
 
     this.currentState = Match.STATE.ONGOING;
 

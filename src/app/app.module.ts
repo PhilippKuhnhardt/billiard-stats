@@ -16,6 +16,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import { MatchControllerComponent } from './match/match-controller.component';
+import { PlayComponent } from './match/play/play.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { MatchControllerComponent } from './match/match-controller.component';
     DashboardComponent,
     SidenavComponent,
     MatchSetupComponent,
-    MatchControllerComponent
+    MatchControllerComponent,
+    PlayComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,9 @@ import { MatchControllerComponent } from './match/match-controller.component';
     MatButtonModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

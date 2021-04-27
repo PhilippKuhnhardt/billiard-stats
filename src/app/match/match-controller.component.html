@@ -1,1 +1,5 @@
-<app-match-setup></app-match-setup>
+<div class="container">
+  <app-match-setup *ngIf="!gameSetupFinished" (gameSetupFinished)="onGameSetupFinished($event)"></app-match-setup>
+  <app-play *ngIf="gameSetupFinished"></app-play>
+</div>
+

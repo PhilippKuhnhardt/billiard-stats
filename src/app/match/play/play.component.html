@@ -1,0 +1,9 @@
+<h1>{{teams[TEAM.ONE].readableString()}} VS. {{teams[TEAM.TWO].readableString()}} - {{wins[TEAM.ONE]}}:{{wins[TEAM.TWO]}}</h1>
+<mat-card class="game-card" *ngFor="let game of games">
+ <p>Spiel {{game}}</p>
+  <mat-button-toggle-group (change)="gamePlayed($event)" [disabled]="isGameDisabled(game)">
+    <mat-button-toggle [value]="TEAM.ONE">{{this.teams[TEAM.ONE].readableString()}}</mat-button-toggle>
+    <mat-button-toggle [value]="TEAM.TWO">{{this.teams[TEAM.TWO].readableString()}}</mat-button-toggle>
+  </mat-button-toggle-group>
+</mat-card>
+<button mat-raised-button color="primary" [disabled]="gameState === STATE.ONGOING">Spiel beenden</button>

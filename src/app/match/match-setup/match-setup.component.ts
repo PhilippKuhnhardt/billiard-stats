@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Player} from '../../models/player.model';
 import {PlayerService} from '../../services/player.service';
 import {noDuplicatePlayerValidator} from '../../validators/no-duplicate-player.directive';
+import {MatchService} from "../../services/match.service";
+import {Team} from "../../models/team.model";
+import {Match} from "../../models/match.model";
 
 @Component({
   selector: 'app-match-setup',
@@ -11,17 +14,15 @@ import {noDuplicatePlayerValidator} from '../../validators/no-duplicate-player.d
 })
 export class MatchSetupComponent implements OnInit {
 
-  public GAME_LENGTH = {
-    BO1: 0,
-    BO3: 1,
-    BO5: 2,
-    BO7: 3,
-  };
+  @Output() gameSetupFinished = new EventEmitter<boolean>();
+
+  public GAME_LENGTH = Match.GAME_LENGTH
 
   public players: Player[];
   public gameSetupForm: FormGroup;
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService,
+              private matchService: MatchService) { }
 
 
   ngOnInit(): void {
@@ -37,7 +38,11 @@ export class MatchSetupComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.gameSetupForm.value);
+    let playersTeamOne = this.gameSetupForm.value.teamOne.map(playerId => this.players.find(player => player.id === playerId))
+    let playersTeamTwo = this.gameSetupForm.value.teamTwo.map(playerId => this.players.find(player => player.id === playerId))
+    let gameLength = this.gameSetupForm.value.gameLength;
+    this.matchService.createMatch(new Team(playersTeamOne), new Team(playersTeamTwo), gameLength);
+    this.gameSetupFinished.emit(true);
   }
 
 }

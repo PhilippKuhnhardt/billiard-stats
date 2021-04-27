@@ -23,6 +23,6 @@ export class Team {
   }
 
   public readableString(): string {
-    return this.playerList.toString()
+    return this.playerList.map(player => player.name).toString();
   }
 }

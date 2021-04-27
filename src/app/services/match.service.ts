@@ -27,7 +27,9 @@ export class MatchService {
 
   private match: Match;
 
-  constructor(teamOne: Team, teamTwo: Team, gameLength: number) {
+  constructor() { }
+
+  public createMatch(teamOne: Team, teamTwo: Team, gameLength: number){
     this.match = new Match(teamOne, teamTwo, gameLength);
   }
 
